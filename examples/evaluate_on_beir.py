@@ -4,7 +4,7 @@ Sometimes you might be interested in benchmarking BM25 on BEIR. bm25s makes this
 To install:
 
 ```
-pip install bm25s[core] beir
+pip install bm25s-cupy[core] beir
 ```
 
 Now, run this script, you can modify the `run_benchmark()` part to use the datase you want to test on.

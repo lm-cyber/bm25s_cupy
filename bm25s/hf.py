@@ -37,12 +37,11 @@ tags:
 
 # BM25S Index
 
-This is a BM25S index created with the [`bm25s` library](https://github.com/xhluca/bm25s) (version `{version}`), an ultra-fast implementation of BM25. It can be used for lexical retrieval tasks.
+This is a BM25S index created with the [`bm25s-cupy` package](https://github.com/lm-cyber/bm25s_cupy) (version `{version}`), an ultra-fast implementation of BM25 with an optional CuPy GPU backend. It can be used for lexical retrieval tasks.
 
 BM25S Related Links:
 
-* 🏠[Homepage](https://bm25s.github.io)
-* 💻[GitHub Repository](https://github.com/xhluca/bm25s)
+* 💻[GitHub Repository](https://github.com/lm-cyber/bm25s_cupy)
 * 🤗[Blog Post](https://huggingface.co/blog/xhluca/bm25s)
 * 📝[Technical Report](https://arxiv.org/abs/2407.03618)
 
@@ -52,10 +51,10 @@ BM25S Related Links:
 You can install the `bm25s` library with `pip`:
 
 ```bash
-pip install "bm25s=={version}"
+pip install "bm25s-cupy=={version}"
 
 # Include extra dependencies like stemmer
-pip install "bm25s[full]=={version}"
+pip install "bm25s-cupy[full]=={version}"
 
 # For huggingface hub usage
 pip install huggingface_hub

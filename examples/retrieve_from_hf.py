@@ -7,7 +7,7 @@ saved with BM25HF.save_to_hub. We will retrieve the top-k results for custom que
 To run this example, you need to install the following dependencies:
 
 ```bash
-pip install bm25s[full]
+pip install bm25s-cupy[full]
 ```
 
 To build an index, please refer to the `examples/index_and_upload_to_hf.py` script. You

@@ -8,7 +8,7 @@ the top-k results for each batch, clearing the memory after each batch.
 To run this example, you need to install the following dependencies:
 
 ```bash
-pip install bm25s[core]
+pip install bm25s-cupy[core]
 ```
 
 To build an index, please refer to the `examples/index_nq.py` script. You

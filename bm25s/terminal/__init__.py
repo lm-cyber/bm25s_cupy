@@ -43,7 +43,7 @@ def list_user_indices():
 def select_index_interactive():
     """
     Show an interactive picker for selecting an index from the user directory.
-    Requires 'rich' package (install with: pip install bm25s[cli])
+    Requires 'rich' package (install with: pip install bm25s-cupy[cli])
     """
     indices = list_user_indices()
     

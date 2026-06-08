@@ -6,7 +6,7 @@ This shows how to build an index of the natural questions dataset using BM25S.
 To run this example, you need to install the following dependencies:
 
 ```bash
-pip install bm25s[core]
+pip install bm25s-cupy[core]
 ```
 
 Then, run with:

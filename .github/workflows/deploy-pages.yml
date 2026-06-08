@@ -1,14 +1,6 @@
 name: Deploy Homepage to GitHub Pages
 
 on:
-  release:
-    types: [published]
-  push:
-    branches: [main]
-    paths:
-      - "bm25s/high_level/README.md"
-      - ".github/scripts/build_pages.py"
-      - ".github/workflows/deploy-pages.yml"
   workflow_dispatch: # Allow manual trigger
 
 jobs:

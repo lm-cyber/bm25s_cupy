@@ -6,7 +6,7 @@ This will show how to index a dataset from BEIR and upload it to the Hugging Fac
 To run this example, you need to install the following dependencies:
 
 ```bash
-pip install beir bm25s[full]
+pip install beir bm25s-cupy[full]
 ```
 
 Make sure to replace `write-your-username-here` with your Hugging Face username,

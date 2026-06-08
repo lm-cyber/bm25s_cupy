@@ -1,16 +1,16 @@
 <div align="center">
 
-<h1>BM25S⚡</h1>
+<h1>BM25S CuPy⚡</h1>
 
-<i>BM25S (or BM25-Sparse) is an ultrafast implementation of BM25 in pure Python, powered by Numpy</i>
+<i>A drop-in BM25S fork with an optional CuPy GPU backend</i>
 
 <table>
       <tr>
             <td>
-                  <a href="https://github.com/xhluca/bm25s">💻 GitHub</a>
+                  <a href="https://github.com/lm-cyber/bm25s_cupy">💻 GitHub</a>
             </td>
             <td>
-                  <a href="https://bm25s.github.io">🏠 Homepage</a>
+                  <a href="https://pypi.org/project/bm25s-cupy/">📦 PyPI</a>
             </td>
             <td>
                   <a href="https://arxiv.org/abs/2407.03618">📝 Technical Report</a>
@@ -24,16 +24,14 @@
       </tr>
 </table>
 
-<a href="https://pepy.tech/projects/bm25s"><img src="https://static.pepy.tech/badge/bm25s" alt="PyPI Downloads"></a>
-<a href="https://pypi.org/project/bm25s/"><img alt="PyPI - Version" src="https://img.shields.io/pypi/v/bm25s"></a>
-<a href="https://github.com/xhluca/bm25s/blob/main/LICENSE"><img alt="GitHub License" src="https://img.shields.io/github/license/xhluca/bm25s?link=https%3A%2F%2Fgithub.com%2Fxhluca%2Fbm25s%2Fblob%2Fmain%2FLICENSE"></a>
-<a href="https://github.com/xhluca/bm25s/pulls?q=is%3Apr+is%3Aclosed"><img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues-pr-closed/xhluca/bm25s"></a>
-<a href="https://github.com/xhluca/bm25s/discussions"><img alt="GitHub Discussions" src="https://img.shields.io/github/discussions/xhluca/bm25s?link=https%3A%2F%2Fgithub.com%2Fxhluca%2Fbm25s%2Fdiscussions"></a>
+<a href="https://pepy.tech/projects/bm25s-cupy"><img src="https://static.pepy.tech/badge/bm25s-cupy" alt="PyPI Downloads"></a>
+<a href="https://pypi.org/project/bm25s-cupy/"><img alt="PyPI - Version" src="https://img.shields.io/pypi/v/bm25s-cupy"></a>
+<a href="https://github.com/lm-cyber/bm25s_cupy/blob/main/LICENSE"><img alt="GitHub License" src="https://img.shields.io/github/license/lm-cyber/bm25s_cupy"></a>
 
 
 </div>
 
-Welcome to `bm25s`, a library that implements BM25 in Python, allowing you to rank documents based on a query. BM25 is a widely used ranking function used for text retrieval tasks, and is a core component of search services like Elasticsearch.
+Welcome to `bm25s-cupy`, a drop-in fork of `bm25s` that implements BM25 in Python and keeps the import name as `bm25s`. BM25 is a widely used ranking function used for text retrieval tasks, and is a core component of search services like Elasticsearch.
 
 It is designed to be:
 * **Fast**: `bm25s` is implemented in pure Python and leverage sparse matrices to store eagerly computed scores for all document tokens. This allows extremely fast scoring at query time, improving performance over popular libraries by orders of magnitude (see benchmarks below).
@@ -66,28 +64,37 @@ Below, we compare `bm25s` with Elasticsearch in terms of speedup over `rank-bm25
 
 ## Installation
 
-You can install `bm25s` with pip:
+You can install this drop-in fork with pip:
 
 ```bash
-pip install bm25s
+pip install bm25s-cupy
+```
+
+The Python import remains unchanged:
+
+```python
+import bm25s
 ```
 
 You can install the recommended (but optional) dependencies:
 
 ```bash
 # HIGHLY RECOMMENDED: To install all core dependencies (json loading, progress bar, stemming, JIT compilation)
-pip install "bm25s[core]"
+pip install "bm25s-cupy[core]"
 
 # If you just want to use stemming for better results, you can install a stemmer
 pip install PyStemmer
 
 # Install all extra dependencies
-pip install "bm25s[full]"
+pip install "bm25s-cupy[full]"
 
 # For GPU retrieval, install the CuPy package that matches your CUDA runtime,
 # then select backend="cupy" or backend_selection="cupy" explicitly.
 # For example, with CUDA 12:
-pip install cupy-cuda12x
+pip install "bm25s-cupy[cuda12]"
+
+# Or with CUDA 13:
+pip install "bm25s-cupy[cuda13]"
 
 ```
 
@@ -210,7 +217,7 @@ NumPy; it does not select CuPy automatically.
 ## High Level API
 
 > [!TIP]
-> **New:** We now recommend using the [**`BM25`** package on PyPI](https://pypi.org/project/BM25/) for a simpler, beginner-friendly experience. It includes all necessary dependencies (stemming, CLI, etc.) and provides the same high-level API shown below.
+> This drop-in fork publishes only the `bm25s-cupy` distribution. The import path for the high-level API remains `bm25s.high_level`.
 
 If you want to quickly search on a local file, you can use the `bm25s.high_level` module:
 
@@ -287,11 +294,11 @@ bm25 search -i my_index "your query here" -s results.json
 
 ### Interactive Index Picker
 
-When using `-u` without specifying an index name, an interactive picker is displayed (requires `bm25s[cli]`):
+When using `-u` without specifying an index name, an interactive picker is displayed (requires `bm25s-cupy[cli]`):
 
 ```bash
 # Install CLI extras for colored interactive picker
-pip install "bm25s[cli]"
+pip install "bm25s-cupy[cli]"
 
 # Interactive picker will show available indices
 bm25 search -u "your query"
@@ -568,7 +575,7 @@ uv venv
 source .venv/bin/activate
 
 # Install bm25s with the mcp extra
-uv pip install "bm25s[mcp]"
+uv pip install "bm25s-cupy[mcp]"
 
 # or locally:
 uv pip install -e ".[mcp]"
@@ -728,7 +735,7 @@ Similarly, for MSMARCO (8M+ documents, 300M+ tokens), we show the following resu
 ## Acknowledgement
 
 * The central idea behind the scoring mechanism in this library is originally from [bm25_pt](https://github.com/jxmorris12/bm25_pt), which was a major inspiration to this project.
-* The API of the [`BM25` class](https://github.com/xhluca/bm25s/blob/main/bm25s/__init__.py) is also heavily inspired by the design of BM25-pt, as well as that of rank-bm25.
+* The API of the [`BM25` class](https://github.com/lm-cyber/bm25s_cupy/blob/main/bm25s/__init__.py) is also heavily inspired by the design of BM25-pt, as well as that of rank-bm25.
 * The multilingual stopwords are sourced from the [NLTK stopwords lists](https://github.com/nltk/nltk/blob/96ee715997e1c8d9148b6d8e1b32f412f31c7ff7/nltk/corpus/__init__.py#L315).
 * The numba implementation are inspired by numba implementations originally proposed by [baguetter](https://github.com/mixedbread-ai/baguetter) and [retriv](https://github.com/AmenRa/retriv).
 * The function `bm25s.utils.beir.evaluate` is taken from the [BEIR library](https://github.com/beir-cellar/beir). It follows the same license as the BEIR library, which is Apache 2.0.

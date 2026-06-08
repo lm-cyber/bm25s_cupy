@@ -2,7 +2,7 @@
 # Example: Use Numba to speed up the retrieval process
 
 ```bash
-pip install "bm25s[full]" numba
+pip install "bm25s-cupy[full]" numba
 ```
 
 To build an index, please refer to the `examples/index_and_upload_to_hf.py` script.

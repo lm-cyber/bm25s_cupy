@@ -5,7 +5,8 @@ from pathlib import Path
 
 from setuptools import setup, find_packages
 
-package_name = "bm25s"
+distribution_name = "bm25s-cupy"
+import_package_name = "bm25s"
 base_dir = Path(__file__).resolve().parent
 
 
@@ -115,21 +116,38 @@ extras_require = {
     "evaluation": ["pytrec_eval"],
     "mcp": ["mcp"],
     "cli": ["rich"],
+    "cuda12": ["cupy-cuda12x"],
+    "cuda13": ["cupy-cuda13x"],
 }
-# Dynamically create the 'full' extra by combining all other extras
-extras_require["full"] = sum(extras_require.values(), [])
+full_extra_names = [
+    "core",
+    "stem",
+    "hf",
+    "dev",
+    "selection",
+    "indexing",
+    "evaluation",
+    "mcp",
+    "cli",
+]
+extras_require["full"] = sum(
+    (extras_require[name] for name in full_extra_names), []
+)
 
 setup(
-    name=package_name,
+    name=distribution_name,
     version=package_version,
-    author="Xing Han Lù",
-    author_email=f"{package_name}@googlegroups.com",
-    url=f"https://github.com/xhluca/{package_name}",
-    description=f"An ultra-fast implementation of BM25 based on sparse matrices.",
+    author="Xing Han Lu and bm25s-cupy contributors",
+    url="https://github.com/lm-cyber/bm25s_cupy",
+    project_urls={
+        "Source": "https://github.com/lm-cyber/bm25s_cupy",
+        "Original project": "https://github.com/xhluca/bm25s",
+    },
+    description="A drop-in BM25S fork with an optional CuPy GPU backend.",
     long_description=long_description,
-    packages=find_packages(include=[f"{package_name}*"]),
+    packages=find_packages(include=[f"{import_package_name}*"]),
     package_data={},
-    install_requires=['numpy'],
+    install_requires=["numpy"],
     entry_points={
         "console_scripts": [
             "bm25=bm25s.cli:main",
